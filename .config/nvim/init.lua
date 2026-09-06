@@ -5,7 +5,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -128,20 +128,15 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
--- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
--- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
--- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
--- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
-
--- Window keymaps
--- vim.keymap.set('n', '<leader>h', '<cmd>split<CR>')
-vim.keymap.set('n', '<leader>v', '<cmd>vsplit<CR>')
 vim.keymap.set('n', '<leader>tn', '<cmd>tabnew<CR>')
 vim.keymap.set('n', '<leader>tc', '<cmd>tabclose<CR>')
+vim.keymap.set('n', '<leader>v', '<C-w>v')
 
--- Open errors in new window
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show line diagnostics' })
+-- tab configs
+vim.opt.tabstop = 4 -- visual width
+vim.opt.shiftwidth = 4 -- indent size
+vim.opt.softtabstop = 4 -- num spaces tabs count for
+vim.opt.expandtab = true -- convert tabs to spaces
 
 vim.opt.fillchars:append { diff = ' ' }
 
@@ -200,17 +195,11 @@ require('lazy').setup({
     ---@diagnostic disable-next-line: missing-fields
     opts = {
       signs = {
-        --add = { text = '+' }, ---@diagnostic disable-line: missing-fields
-        --change = { text = '~' }, ---@diagnostic disable-line: missing-fields
-        --delete = { text = '_' }, ---@diagnostic disable-line: missing-fields
-        --topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
-        --changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
-        add = { text = '┃' }, ---@diagnostic disable-line: missing-fields
-        change = { text = '┃' }, ---@diagnostic disable-line: missing-fields
+        add = { text = '+' }, ---@diagnostic disable-line: missing-fields
+        change = { text = '~' }, ---@diagnostic disable-line: missing-fields
         delete = { text = '_' }, ---@diagnostic disable-line: missing-fields
         topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
         changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
-        untracked = { text = '┆' }, ---@diagnostic disable-line: missing-fields
       },
     },
   },
@@ -263,7 +252,7 @@ require('lazy').setup({
     'nvim-telescope/telescope.nvim',
     -- Version 0.2.1
     commit = '3333a52ff548ba0a68af6d8da1e54f9cd96e9179',
-    -- By defalt, Telescope is included and acts as your picker for everything.
+    -- By default, Telescope is included and acts as your picker for everything.
 
     -- If you would like to switch to a different picker (like snacks, or fzf-lua)
     -- you can disable the Telescope plugin by setting enabled to false and enable
@@ -424,10 +413,8 @@ require('lazy').setup({
 
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
-      vim.keymap.set('n', '<leader>b', '<Cmd>Neotree<CR>')
     end,
   },
-
   -- LSP Plugins
   {
     -- Main LSP Configuration
@@ -596,8 +583,8 @@ require('lazy').setup({
       end
     end,
   },
-
-  { -- Autoformat
+  {
+    -- Autoformat
     'stevearc/conform.nvim',
     -- Version 9.1.0
     commit = '3543d000dafbc41cc7761d860cfdb24e82154f75',
@@ -639,31 +626,31 @@ require('lazy').setup({
       },
     },
   },
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    -- Version 4.14.1
-    commit = '545d72cde6400835d895160ecb5853874fd5156d',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
-    end,
-  },
-  -- Highlight todo, notes, etc in comments
+  --   { -- You can easily change to a different colorscheme.
+  --     -- Change the name of the colorscheme plugin below, and then
+  --     -- change the command in the config to whatever the name of that colorscheme is.
+  --     --
+  --     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  --     'folke/tokyonight.nvim',
+  --     -- Version 4.14.1
+  --     commit = '545d72cde6400835d895160ecb5853874fd5156d',
+  --     priority = 1000, -- Make sure to load this before all the other start plugins.
+  --     config = function()
+  --       ---@diagnostic disable-next-line: missing-fields
+  --       require('tokyonight').setup {
+  --         styles = {
+  --           comments = { italic = false }, -- Disable italics in comments
+  --         },
+  --       }
+  --
+  --       -- Load the colorscheme here.
+  --       -- Like many other themes, this one has different styles, and you could load
+  --       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  --       vim.cmd.colorscheme 'tokyonight-night'
+  --     end,
+  --   },
   {
+    -- Highlight todo, notes, etc in comments
     'folke/todo-comments.nvim',
     -- Version 1.5.0
     commit = '31e3c38ce9b29781e4422fc0322eb0a21f4e8668',
@@ -674,8 +661,8 @@ require('lazy').setup({
     ---@diagnostic disable-next-line: missing-fields
     opts = { signs = false },
   },
-
-  { -- Collection of various small independent plugins/modules
+  {
+    -- Collection of various small independent plugins/modules
     'nvim-mini/mini.nvim',
     -- Version 0.17.0
     commit = 'a995fe9cd4193fb492b5df69175a351a74b3d36b',
@@ -712,8 +699,8 @@ require('lazy').setup({
       --  Check out: https://github.com/nvim-mini/mini.nvim
     end,
   },
-
-  { -- Highlight, edit, and navigate code
+  {
+    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     -- Last commit before Archive
     commit = '4916d6592ede8c07973490d9322f187e07dfefac',
@@ -748,14 +735,68 @@ require('lazy').setup({
     end,
   },
   {
+    -- VSCode dark color theme
+    'mofiqul/vscode.nvim',
+    -- No Releases
+    commit = 'aa1102a7e15195c9cca22730b09224a7f7745ba8',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- 1. Load the VSCode color palette first
+      -- local c = require('vscode.colors').get_colors()
+
+      -- 2. Pass the options directly to setup
+      -- require('vscode').setup {
+      -- Enable transparent background if you prefer it
+      -- transparent = false,
+      -- Override specific plugin highlight groups
+      -- group_overrides = {
+      --   GitGraphBranch1 = { fg = c.vscLightBlue, bold = true },
+      --   GitGraphBranch2 = { fg = c.vscPink, bold = true },
+      --   GitGraphBranch3 = { fg = c.vscGreen, bold = true },
+      --   GitGraphBranch4 = { fg = c.vscYellow, bold = true },
+      --   GitGraphBranch5 = { fg = c.vscViolet, bold = true },
+      -- },
+      -- }
+
+      -- 3. Load the colorscheme
+      vim.cmd.colorscheme 'vscode'
+    end,
+    --    config = function() vim.cmd [[colorscheme vscode]] end,
+  },
+  {
     'isakbm/gitgraph.nvim',
     -- No Releases
     commit = 'c16daa7d7dd597caf9085644c009cfa80b75db8e',
     opts = {
       git_cmd = 'git',
       symbols = {
-        merge_commit = 'M',
-        commit = '*',
+        merge_commit = '',
+        commit = '',
+        merge_commit_end = '',
+        commit_end = '',
+
+        -- Advanced symbols
+        GVER = '',
+        GHOR = '',
+        GCLD = '',
+        GCRD = '╭',
+        GCLU = '',
+        GCRU = '',
+        GLRU = '',
+        GLRD = '',
+        GLUD = '',
+        GRUD = '',
+        GFORKU = '',
+        GFORKD = '',
+        GRUDCD = '',
+        GRUDCU = '',
+        GLUDCD = '',
+        GLUDCU = '',
+        GLRDCL = '',
+        GLRDCR = '',
+        GLRUCL = '',
+        GLRUCR = '',
       },
       format = {
         timestamp = '%H:%M:%S %d-%m-%Y',
@@ -781,15 +822,27 @@ require('lazy').setup({
         desc = 'GitGraph - Draw',
       },
     },
+    config = function(_, opts)
+      require('gitgraph').setup(opts)
+
+      vim.api.nvim_set_hl(0, 'GitGraphBranch1', { fg = '#d7008f' })
+      vim.api.nvim_set_hl(0, 'GitGraphBranch2', { fg = '#07da09' })
+      vim.api.nvim_set_hl(0, 'GitGraphBranch3', { fg = '#2985d9' })
+      vim.api.nvim_set_hl(0, 'GitGraphBranch4', { fg = '#fb0007' })
+      vim.api.nvim_set_hl(0, 'GitGraphBranch5', { fg = '#d68505' })
+      vim.api.nvim_set_hl(0, 'GitGraphBranchName', { fg = '#d4d4d4' })
+      vim.api.nvim_set_hl(0, 'GitGraphBranchMsg', { fg = '#6a9955' })
+    end,
   },
   {
+    -- Git Diff Views
     'sindrets/diffview.nvim',
     -- No Releases
     commit = '4516612fe98ff56ae0415a259ff6361a89419b0a',
     cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewToggle', 'DiffviewFileHistory' },
     config = true,
     vim.keymap.set('n', '<leader>gdb', function() vim.cmd 'DiffviewOpen ' end, { desc = 'Repo Diff' }),
-    vim.keymap.set('n', '<leader>gdm', function() vim.cmd 'DiffviewOpen HEAD..origin/main' end, { desc = 'Repo Diff' }),
+    vim.keymap.set('n', '<leader>gdm', function() vim.cmd 'DiffviewOpen HEAD...origin/main' end, { desc = 'Repo Diff' }),
     init = function()
       require('diffview').setup {
         diff_binaries = false,
@@ -810,35 +863,54 @@ require('lazy').setup({
     end,
   },
   {
+    -- Markdown rendering
     'MeanderingProgrammer/render-markdown.nvim',
     -- Version 8.12.0
     commit = 'e3c18ddd27a853f85a6f513a864cf4f2982b9f26',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },
-    ---@module 'render-markdown'
-    ---@type render.md.UserConfig
-    opts = {},
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' }, ---@module 'render-markdown' @type render.md.UserConfig opts = {}, },
   },
   {
+    -- VSCode style file tree
     'nvim-neo-tree/neo-tree.nvim',
-    branch = 'v3.x',
+    -- Version 1.17.0
+    commit = '85d1145ac71c1b8e1423862c78165a1f609faf60',
     dependencies = {
       'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons', -- Requires a Nerd Font
       'MunifTanjim/nui.nvim',
-      'nvim-tree/nvim-web-devicons', -- optional, but recommended
     },
-    lazy = false, -- neo-tree will lazily load itself
-  },
+    default_component_config = {
+      git_status = {
+        symbols = {
+          -- Change type
+          added = '', -- or "✚"
+          modified = '', -- or ""
+          deleted = '✖', -- this can only be used in the git_status source
+          renamed = '󰁕', -- this can only be used in the git_status source
+          -- Status type
+          untracked = '',
+          ignored = '',
+          unstaged = '󰄱',
+          staged = '',
+          conflict = '',
+        },
+      },
+    },
+    opts = {
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          hide_dotfiles = false, -- Show dotfiles
+          hide_gitignored = false, -- Show git-ignored files
+        },
+      },
+    },
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    This is the easiest way to modularize your config.
-  --
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
-  --
-  -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
-  -- Or use telescope!
-  -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
-  -- you can continue same window with `<space>sr` which resumes last telescope search
+    config = function(_, opts)
+      require('neo-tree').setup(opts)
+      vim.keymap.set('n', '<leader>b', ':Neotree toggle<CR>', { silent = true })
+    end,
+  },
 }, { ---@diagnostic disable-line: missing-fields
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

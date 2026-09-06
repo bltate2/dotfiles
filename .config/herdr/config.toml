@@ -1,0 +1,14 @@
+onboarding = false
+
+[keys]
+prefix = "ctrl+space"
+
+# Pane Navigation
+focus_pane_left = "ctrl+h"
+focus_pane_right = "ctrl+l"
+focus_pane_up = "ctrl+k"
+focus_pane_down = "ctrl+j"
+
+# Toggle herdr sidepanel
+toggle_sidebar = "prefix+p"
+
