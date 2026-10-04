@@ -283,7 +283,7 @@ require('lazy').setup({
       {
         'nvim-telescope/telescope-ui-select.nvim',
         -- No Releases
-        commit = '6e51d7da30bd139a6950adf2a47fda6df9fa06d2k',
+        commit = '6e51d7da30bd139a6950adf2a47fda6df9fa06d2',
       },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
@@ -872,8 +872,8 @@ require('lazy').setup({
   {
     -- VSCode style file tree
     'nvim-neo-tree/neo-tree.nvim',
-    -- Version 1.17.0
-    commit = '85d1145ac71c1b8e1423862c78165a1f609faf60',
+    -- Version 3.42.0
+    commit = 'f3f3bf73414e400cf9fc13fda50f00404a8f8ab1',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons', -- Requires a Nerd Font
