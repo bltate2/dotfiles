@@ -6,7 +6,7 @@
 
 1. Add an alias (`~/.bash_aliases`)
     ```shell
-    alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+    alias config='/usr/bin/git --git-dir=$HOME/.cfg/.git --work-tree=$HOME'
     ```
 
     Then `source ~/.bashrc`
@@ -18,7 +18,7 @@
 
 1. Pull tracked files out of git directory and place in the worktree
     ```shell
-    git checkout
+    config checkout
     ```
 
     If this fails due to `untracked working tree files would be overwritten by checkout`, then backup or remove the offending files and run `git checkout` again.
